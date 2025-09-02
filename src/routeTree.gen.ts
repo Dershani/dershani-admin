@@ -8,10 +8,21 @@
 // You should NOT make any changes in this file as it will be overwritten.
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
+import { createFileRoute } from '@tanstack/react-router'
+
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as DemoFormRouteImport } from './routes/demo.form'
+import { Route as DashSidebarRouteImport } from './routes/dash/_sidebar'
+import { Route as DashSidebarTestRouteImport } from './routes/dash/_sidebar/test'
 
+const DashRouteImport = createFileRoute('/dash')()
+
+const DashRoute = DashRouteImport.update({
+  id: '/dash',
+  path: '/dash',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
@@ -22,35 +33,65 @@ const DemoFormRoute = DemoFormRouteImport.update({
   path: '/demo/form',
   getParentRoute: () => rootRouteImport,
 } as any)
+const DashSidebarRoute = DashSidebarRouteImport.update({
+  id: '/_sidebar',
+  getParentRoute: () => DashRoute,
+} as any)
+const DashSidebarTestRoute = DashSidebarTestRouteImport.update({
+  id: '/test',
+  path: '/test',
+  getParentRoute: () => DashSidebarRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/dash': typeof DashSidebarRouteWithChildren
   '/demo/form': typeof DemoFormRoute
+  '/dash/test': typeof DashSidebarTestRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/dash': typeof DashSidebarRouteWithChildren
   '/demo/form': typeof DemoFormRoute
+  '/dash/test': typeof DashSidebarTestRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/dash': typeof DashRouteWithChildren
+  '/dash/_sidebar': typeof DashSidebarRouteWithChildren
   '/demo/form': typeof DemoFormRoute
+  '/dash/_sidebar/test': typeof DashSidebarTestRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/demo/form'
+  fullPaths: '/' | '/dash' | '/demo/form' | '/dash/test'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/demo/form'
-  id: '__root__' | '/' | '/demo/form'
+  to: '/' | '/dash' | '/demo/form' | '/dash/test'
+  id:
+    | '__root__'
+    | '/'
+    | '/dash'
+    | '/dash/_sidebar'
+    | '/demo/form'
+    | '/dash/_sidebar/test'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  DashRoute: typeof DashRouteWithChildren
   DemoFormRoute: typeof DemoFormRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/dash': {
+      id: '/dash'
+      path: '/dash'
+      fullPath: '/dash'
+      preLoaderRoute: typeof DashRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -65,11 +106,48 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DemoFormRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/dash/_sidebar': {
+      id: '/dash/_sidebar'
+      path: '/dash'
+      fullPath: '/dash'
+      preLoaderRoute: typeof DashSidebarRouteImport
+      parentRoute: typeof DashRoute
+    }
+    '/dash/_sidebar/test': {
+      id: '/dash/_sidebar/test'
+      path: '/test'
+      fullPath: '/dash/test'
+      preLoaderRoute: typeof DashSidebarTestRouteImport
+      parentRoute: typeof DashSidebarRoute
+    }
   }
 }
 
+interface DashSidebarRouteChildren {
+  DashSidebarTestRoute: typeof DashSidebarTestRoute
+}
+
+const DashSidebarRouteChildren: DashSidebarRouteChildren = {
+  DashSidebarTestRoute: DashSidebarTestRoute,
+}
+
+const DashSidebarRouteWithChildren = DashSidebarRoute._addFileChildren(
+  DashSidebarRouteChildren,
+)
+
+interface DashRouteChildren {
+  DashSidebarRoute: typeof DashSidebarRouteWithChildren
+}
+
+const DashRouteChildren: DashRouteChildren = {
+  DashSidebarRoute: DashSidebarRouteWithChildren,
+}
+
+const DashRouteWithChildren = DashRoute._addFileChildren(DashRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  DashRoute: DashRouteWithChildren,
   DemoFormRoute: DemoFormRoute,
 }
 export const routeTree = rootRouteImport
