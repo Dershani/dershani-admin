@@ -1,0 +1,35 @@
+# Commonly ignored Node.js files
+node_modules
+npm-debug.log
+.npm
+
+# Next.js Build Output
+.next
+build
+
+# Next.js Generated Files
+public/static/documents
+
+# Jest
+coverage
+.swc
+junit.xml
+.git
+# Storybook
+storybook-static
+build-storybook.log
+.nyc_output
+
+# Vercel Files
+.vercel
+.turbo
+cache
+
+# Cache Files
+.eslintjscache
+.eslintmdcache
+.stylelintcache
+.prettiercache
+
+# TypeScript
+tsconfig.tsbuildinfo

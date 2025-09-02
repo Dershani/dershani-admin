@@ -1,0 +1,9 @@
+{
+  "short_name": "Dershani Admin",
+  "name": "Dershani Admin Paneli",
+  "icons": [],
+  "start_url": ".",
+  "display": "browser",
+  "theme_color": "#000000",
+  "background_color": "#ffffff"
+}
