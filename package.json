@@ -11,6 +11,7 @@
     "preview": "rsbuild preview",
     "apigen": "npx openapi-typescript http://localhost:3003/swagger/json -o src/lib/types/api-schema.ts"
   },
+  "packageManager": "bun",
   "dependencies": {
     "@base-ui-components/react": "^1.0.0-beta.2",
     "@fontsource-variable/outfit": "5.1.0",
