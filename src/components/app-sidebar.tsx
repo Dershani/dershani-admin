@@ -1,4 +1,10 @@
 import { Link } from '@tanstack/react-router';
+import {
+  BookIcon,
+  BookOpenTextIcon,
+  PencilRulerIcon,
+  SettingsIcon,
+} from 'lucide-react';
 
 import {
   Sidebar,
@@ -6,6 +12,8 @@ import {
   SidebarFooter,
   SidebarGroup,
   SidebarHeader,
+  SidebarMenuButton,
+  SidebarMenuItem,
   useSidebar,
 } from '@/components/ui/sidebar';
 
@@ -16,7 +24,7 @@ export function AppSidebar() {
   return (
     <Sidebar collapsible="icon" variant="inset">
       <SidebarHeader>
-        <Link to="." className="flex items-center justify-center">
+        <Link to="/dash/lessons" className="flex items-center justify-center">
           <Logo
             className="transition-all hover:scale-110"
             style={{
@@ -27,10 +35,43 @@ export function AppSidebar() {
         </Link>
       </SidebarHeader>
       <SidebarContent>
-        <SidebarGroup />
-        <SidebarGroup />
+        <SidebarGroup>
+          <SidebarMenuItem>
+            <SidebarMenuButton asChild className="flex">
+              <Link to={'/dash/lessons'}>
+                <BookIcon />
+                <span className="truncate">Dersler</span>
+              </Link>
+            </SidebarMenuButton>
+          </SidebarMenuItem>
+          <SidebarMenuItem>
+            <SidebarMenuButton asChild className="flex">
+              <Link to={'/dash/units'}>
+                <BookOpenTextIcon />
+                <span className="truncate">Üniteler</span>
+              </Link>
+            </SidebarMenuButton>
+          </SidebarMenuItem>
+          <SidebarMenuItem>
+            <SidebarMenuButton asChild className="flex">
+              <Link to={'/dash/subjects'}>
+                <PencilRulerIcon />
+                <span className="truncate">Konular</span>
+              </Link>
+            </SidebarMenuButton>
+          </SidebarMenuItem>
+        </SidebarGroup>
       </SidebarContent>
-      <SidebarFooter />
+      <SidebarFooter>
+        <SidebarMenuItem>
+          <SidebarMenuButton asChild className="flex">
+            <Link to={'/dash/auth'}>
+              <SettingsIcon />
+              <span className="truncate">Auth Ayarları</span>
+            </Link>
+          </SidebarMenuButton>
+        </SidebarMenuItem>
+      </SidebarFooter>
     </Sidebar>
   );
 }

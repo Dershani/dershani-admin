@@ -8,7 +8,31 @@ import { Slider as ShadcnSlider } from '@/components/ui/slider';
 import { Switch as ShadcnSwitch } from '@/components/ui/switch';
 import { Textarea as ShadcnTextarea } from '@/components/ui/textarea';
 
+import { cn } from '@/lib/utils';
+
 import { useFieldContext, useFormContext } from '../hooks/form-context';
+
+export function FormBase({
+  children,
+  className,
+}: {
+  children: React.ReactNode;
+  className?: string;
+}) {
+  const form = useFormContext();
+  return (
+    <form
+      className={cn('max-w-160 space-y-4', className)}
+      onSubmit={e => {
+        e.preventDefault();
+        e.stopPropagation();
+        form.handleSubmit();
+      }}
+    >
+      {children}
+    </form>
+  );
+}
 
 export function SubscribeButton({ label }: { label: string }) {
   const form = useFormContext();
@@ -54,7 +78,7 @@ export function TextField({
 
   return (
     <div>
-      <Label htmlFor={label} className="mb-2 text-xl font-bold">
+      <Label htmlFor={label} className="mb-2 font-semibold">
         {label}
       </Label>
       <Input
