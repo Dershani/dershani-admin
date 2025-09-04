@@ -22,7 +22,7 @@ export function FormBase({
   const form = useFormContext();
   return (
     <form
-      className={cn('max-w-160 space-y-4', className)}
+      className={cn('*:max-w-160 space-y-4', className)}
       onSubmit={e => {
         e.preventDefault();
         e.stopPropagation();
@@ -47,7 +47,7 @@ export function SubscribeButton({ label }: { label: string }) {
   );
 }
 
-function ErrorMessages({
+export function ErrorMessages({
   errors,
 }: {
   errors: Array<string | { message: string }>;

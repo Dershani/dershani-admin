@@ -1,5 +1,7 @@
 import { createFormHook } from '@tanstack/react-form';
 
+import { MDEditor } from '@/components/form/tanstack-markdown-editor';
+
 import {
   FormBase,
   Select,
@@ -16,6 +18,7 @@ export const { useAppForm } = createFormHook({
     Select,
     TextArea,
     Switch,
+    MDEditor,
   },
   formComponents: {
     SubscribeButton,
