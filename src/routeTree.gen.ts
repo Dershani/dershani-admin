@@ -8,9 +8,8 @@
 // You should NOT make any changes in this file as it will be overwritten.
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
-import { createFileRoute } from '@tanstack/react-router'
-
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as DashRouteRouteImport } from './routes/dash/route'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as DemoFormRouteImport } from './routes/demo.form'
 import { Route as DashSidebarRouteImport } from './routes/dash/_sidebar'
@@ -20,9 +19,7 @@ import { Route as DashSidebarUnitsRouteRouteImport } from './routes/dash/_sideba
 import { Route as DashSidebarSubjectsRouteRouteImport } from './routes/dash/_sidebar/subjects/route'
 import { Route as DashSidebarLessonsRouteRouteImport } from './routes/dash/_sidebar/lessons/route'
 
-const DashRouteImport = createFileRoute('/dash')()
-
-const DashRoute = DashRouteImport.update({
+const DashRouteRoute = DashRouteRouteImport.update({
   id: '/dash',
   path: '/dash',
   getParentRoute: () => rootRouteImport,
@@ -39,7 +36,7 @@ const DemoFormRoute = DemoFormRouteImport.update({
 } as any)
 const DashSidebarRoute = DashSidebarRouteImport.update({
   id: '/_sidebar',
-  getParentRoute: () => DashRoute,
+  getParentRoute: () => DashRouteRoute,
 } as any)
 const DashSidebarTestRoute = DashSidebarTestRouteImport.update({
   id: '/test',
@@ -91,7 +88,7 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/dash': typeof DashRouteWithChildren
+  '/dash': typeof DashRouteRouteWithChildren
   '/dash/_sidebar': typeof DashSidebarRouteWithChildren
   '/demo/form': typeof DemoFormRoute
   '/dash/_sidebar/lessons': typeof DashSidebarLessonsRouteRoute
@@ -136,7 +133,7 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  DashRoute: typeof DashRouteWithChildren
+  DashRouteRoute: typeof DashRouteRouteWithChildren
   DemoFormRoute: typeof DemoFormRoute
 }
 
@@ -146,7 +143,7 @@ declare module '@tanstack/react-router' {
       id: '/dash'
       path: '/dash'
       fullPath: '/dash'
-      preLoaderRoute: typeof DashRouteImport
+      preLoaderRoute: typeof DashRouteRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/': {
@@ -165,10 +162,10 @@ declare module '@tanstack/react-router' {
     }
     '/dash/_sidebar': {
       id: '/dash/_sidebar'
-      path: '/dash'
+      path: ''
       fullPath: '/dash'
       preLoaderRoute: typeof DashSidebarRouteImport
-      parentRoute: typeof DashRoute
+      parentRoute: typeof DashRouteRoute
     }
     '/dash/_sidebar/test': {
       id: '/dash/_sidebar/test'
@@ -228,19 +225,21 @@ const DashSidebarRouteWithChildren = DashSidebarRoute._addFileChildren(
   DashSidebarRouteChildren,
 )
 
-interface DashRouteChildren {
+interface DashRouteRouteChildren {
   DashSidebarRoute: typeof DashSidebarRouteWithChildren
 }
 
-const DashRouteChildren: DashRouteChildren = {
+const DashRouteRouteChildren: DashRouteRouteChildren = {
   DashSidebarRoute: DashSidebarRouteWithChildren,
 }
 
-const DashRouteWithChildren = DashRoute._addFileChildren(DashRouteChildren)
+const DashRouteRouteWithChildren = DashRouteRoute._addFileChildren(
+  DashRouteRouteChildren,
+)
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  DashRoute: DashRouteWithChildren,
+  DashRouteRoute: DashRouteRouteWithChildren,
   DemoFormRoute: DemoFormRoute,
 }
 export const routeTree = rootRouteImport
