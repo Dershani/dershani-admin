@@ -1,7 +1,7 @@
 import { createFileRoute } from '@tanstack/react-router';
 import z from 'zod';
 
-import { useAppForm } from '../hooks/form';
+import { useAppForm } from '../components/form';
 
 export const Route = createFileRoute('/demo/form')({
   component: SimpleForm,

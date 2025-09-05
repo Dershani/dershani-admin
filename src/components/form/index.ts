@@ -1,4 +1,4 @@
-import { createFormHook } from '@tanstack/react-form';
+import { createFormHook, createFormHookContexts } from '@tanstack/react-form';
 
 import { MDEditor } from '@/components/form/tanstack-markdown-editor';
 
@@ -9,10 +9,12 @@ import {
   Switch,
   TextArea,
   TextField,
-} from '../components/form-components';
-import { fieldContext, formContext } from './form-context';
+} from '../form-components';
 
-export const { useAppForm } = createFormHook({
+export const { fieldContext, useFieldContext, formContext, useFormContext } =
+  createFormHookContexts();
+
+export const { useAppForm, withForm, withFieldGroup } = createFormHook({
   fieldComponents: {
     TextField,
     Select,

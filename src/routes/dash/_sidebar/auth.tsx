@@ -1,8 +1,9 @@
-import { useAppForm } from '@/hooks/form';
 import { PageTitle } from '@/hooks/page-title';
 import { createFileRoute } from '@tanstack/react-router';
 import { type } from 'arktype';
 import { toast } from 'sonner';
+
+import { useAppForm } from '@/components/form';
 
 export const Route = createFileRoute('/dash/_sidebar/auth')({
   component: RouteComponent,

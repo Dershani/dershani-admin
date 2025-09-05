@@ -10,7 +10,7 @@ import { Textarea as ShadcnTextarea } from '@/components/ui/textarea';
 
 import { cn } from '@/lib/utils';
 
-import { useFieldContext, useFormContext } from '../hooks/form-context';
+import { useFieldContext, useFormContext } from './form';
 
 export function FormBase({
   children,

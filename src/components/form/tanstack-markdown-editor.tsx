@@ -1,7 +1,8 @@
 import { Suspense, lazy } from 'react';
 
-import { useFieldContext } from '@/hooks/form-context';
 import { useStore } from '@tanstack/react-form';
+
+import { useFieldContext } from '@/components/form';
 
 import { cn } from '@/lib/utils';
 
