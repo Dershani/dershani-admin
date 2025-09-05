@@ -9,7 +9,7 @@ import {
   Switch,
   TextArea,
   TextField,
-} from '../form-components';
+} from './form-components';
 
 export const { fieldContext, useFieldContext, formContext, useFormContext } =
   createFormHookContexts();

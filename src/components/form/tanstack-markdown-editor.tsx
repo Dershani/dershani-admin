@@ -6,9 +6,9 @@ import { useFieldContext } from '@/components/form';
 
 import { cn } from '@/lib/utils';
 
-import { ErrorMessages } from '../form-components';
 import { Label } from '../ui/label';
 import { Skeleton } from '../ui/skeleton';
+import { ErrorMessages } from './form-components';
 
 const MarkdownEditor = lazy(() => import('./markdown-editor'));
 
