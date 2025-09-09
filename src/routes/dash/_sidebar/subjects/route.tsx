@@ -9,10 +9,12 @@ import {
 import { Datatable, TableNav } from '@/components/datatable';
 
 import { queryApi } from '@/lib/api';
+import { notFoundRedirectOptions } from '@/lib/redirect-route-options';
 
 import { columns } from './-columns';
 
 export const Route = createFileRoute('/dash/_sidebar/subjects')({
+  ...notFoundRedirectOptions('/dash/subjects'),
   component: RouteComponent,
   loader: ({ context: { queryClient } }) => {
     queryClient.ensureQueryData(
@@ -23,7 +25,7 @@ export const Route = createFileRoute('/dash/_sidebar/subjects')({
 
 function RouteComponent() {
   'use no memo';
-  const queryData = queryApi.useQuery('get', '/subjects/admin/');
+  const queryData = queryApi.useQuery('get', '/subjects/admin');
   const table = useReactTable({
     data: queryData.data ?? [],
     columns,

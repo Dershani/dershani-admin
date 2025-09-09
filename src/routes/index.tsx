@@ -1,12 +1,7 @@
-import { createFileRoute, redirect } from '@tanstack/react-router';
+import { createFileRoute } from '@tanstack/react-router';
 
-export const Route = createFileRoute('/')({
-  component: App,
-  loader: ({ location }) => {
-    if (location.pathname === '/') throw redirect({ to: '/dash/lessons' });
-  },
-});
+import { redirectRouteOptions } from '@/lib/redirect-route-options';
 
-function App() {
-  return <div className="text-center"></div>;
-}
+export const Route = createFileRoute('/')(
+  redirectRouteOptions('/', '/dash/lessons')
+);

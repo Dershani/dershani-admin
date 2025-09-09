@@ -13,9 +13,6 @@ import {
 
 export const Route = createFileRoute('/dash/_sidebar')({
   component: RouteComponent,
-  notFoundComponent: () => {
-    return <p>Aradığın sayfa bulunamadı!</p>;
-  },
 });
 
 function RouteComponent() {

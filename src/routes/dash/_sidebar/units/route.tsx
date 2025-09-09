@@ -9,10 +9,12 @@ import {
 import { Datatable, TableNav } from '@/components/datatable';
 
 import { queryApi } from '@/lib/api';
+import { notFoundRedirectOptions } from '@/lib/redirect-route-options';
 
 import { columns } from './-columns';
 
 export const Route = createFileRoute('/dash/_sidebar/units')({
+  ...notFoundRedirectOptions('/dash/units'),
   component: RouteComponent,
   loader: ({ context: { queryClient } }) => {
     queryClient.ensureQueryData(queryApi.queryOptions('get', '/units/'));
