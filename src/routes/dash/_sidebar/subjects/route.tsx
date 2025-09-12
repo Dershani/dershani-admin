@@ -1,4 +1,6 @@
 import { PageTitle } from '@/hooks/page-title';
+import { subjectCollection } from '@/integrations/collections/subjects';
+import { useLiveQuery } from '@tanstack/react-db';
 import { createFileRoute } from '@tanstack/react-router';
 import {
   getCoreRowModel,
@@ -25,9 +27,9 @@ export const Route = createFileRoute('/dash/_sidebar/subjects')({
 
 function RouteComponent() {
   'use no memo';
-  const queryData = queryApi.useQuery('get', '/subjects/admin');
+  const { data } = useLiveQuery(q => q.from({ lesson: subjectCollection }));
   const table = useReactTable({
-    data: queryData.data ?? [],
+    data: data ?? [],
     columns,
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
@@ -42,11 +44,7 @@ function RouteComponent() {
   return (
     <div className="space-y-4">
       <PageTitle>Konular</PageTitle>
-      <Datatable
-        isLoading={queryData.isLoading}
-        table={table}
-        columns={columns}
-      />
+      <Datatable table={table} columns={columns} />
       <TableNav table={table} />
     </div>
   );

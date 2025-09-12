@@ -1,4 +1,21 @@
+import { useState } from 'react';
+
+import { ClassOptionsSelect } from '@/constants/filter-options';
+import { useLessonsSelectOptions } from '@/hooks/use-lessons-units-select-options';
+import { unitCollection } from '@/integrations/collections/units';
 import { ColumnDef } from '@tanstack/react-table';
+import { type } from 'arktype';
+import { EditIcon } from 'lucide-react';
+
+import { useAppForm } from '@/components/form';
+import { Button } from '@/components/ui/button';
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from '@/components/ui/dialog';
 
 import { queryApi } from '@/lib/api';
 import { components } from '@/lib/types/api-schema';
@@ -32,4 +49,75 @@ export const columns: ColumnDef<components['schemas']['unit']>[] = [
       return <span>{l?.name}</span>;
     },
   },
+  {
+    header: 'Aksiyon',
+    cell: ({ row }) => <EditRow row={row.original} />,
+  },
 ];
+
+function EditRow({ row }: { row: components['schemas']['unit'] }) {
+  const [open, setOpen] = useState(false);
+  const lessonsSelectValues = useLessonsSelectOptions();
+
+  const form = useAppForm({
+    defaultValues: row,
+    validators: {
+      onSubmit: type({
+        id: 'number',
+        lesson: 'number',
+        class_no: 'number',
+        name: 'string',
+        name_normalized: 'string',
+      }),
+    },
+    onSubmit: ({ value }) => {
+      unitCollection.update(value.id, draft => {
+        draft.lesson = value.lesson;
+        draft.class_no = value.class_no;
+        draft.name = value.name;
+        draft.name_normalized = value.name_normalized;
+      });
+      setOpen(false);
+    },
+  });
+  return (
+    <Dialog open={open} onOpenChange={setOpen}>
+      <DialogTrigger
+        render={
+          <Button size={'datatable'} variant={'outline'}>
+            <EditIcon className="size-3" />
+          </Button>
+        }
+      />
+      <DialogContent>
+        <DialogHeader>
+          <DialogTitle>Değişiklik Yap</DialogTitle>
+          <form.AppForm>
+            <form.FormBase>
+              <form.AppField name="id">
+                {field => <field.TextField label="Id" type="number" disabled />}
+              </form.AppField>
+              <form.AppField name="name">
+                {field => <field.TextField label="İsim" />}
+              </form.AppField>
+              <form.AppField name="name_normalized">
+                {field => <field.TextField label="URL İsim" />}
+              </form.AppField>
+              <form.AppField name="class_no">
+                {field => (
+                  <field.Select label="Sınıf" values={ClassOptionsSelect} />
+                )}
+              </form.AppField>
+              <form.AppField name="lesson">
+                {field => (
+                  <field.Select label="Ders" values={lessonsSelectValues} />
+                )}
+              </form.AppField>
+              <form.SubscribeButton label="Kaydet" />
+            </form.FormBase>
+          </form.AppForm>
+        </DialogHeader>
+      </DialogContent>
+    </Dialog>
+  );
+}

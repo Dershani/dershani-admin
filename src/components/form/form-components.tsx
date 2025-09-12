@@ -131,7 +131,7 @@ export function Select({
   placeholder,
 }: {
   label: string;
-  values: Array<{ label: string; value: string }>;
+  values: Array<{ label: string; value: string | number }>;
   placeholder?: string;
 }) {
   const field = useFieldContext<string>();
@@ -139,24 +139,29 @@ export function Select({
 
   return (
     <div>
+      <Label className="mb-2 font-semibold">{label}</Label>
       <ShadcnSelect.Select
+        multiple={false}
+        items={values}
         name={field.name}
         value={field.state.value}
-        onValueChange={value => field.handleChange(value)}
+        onValueChange={value => field.handleChange(value as string)}
       >
         <ShadcnSelect.SelectTrigger className="w-full">
-          <ShadcnSelect.SelectValue placeholder={placeholder} />
+          <ShadcnSelect.SelectValue placeholder={placeholder ?? ''} />
         </ShadcnSelect.SelectTrigger>
-        <ShadcnSelect.SelectContent>
-          <ShadcnSelect.SelectGroup>
-            <ShadcnSelect.SelectLabel>{label}</ShadcnSelect.SelectLabel>
-            {values.map(value => (
-              <ShadcnSelect.SelectItem key={value.value} value={value.value}>
-                {value.label}
-              </ShadcnSelect.SelectItem>
-            ))}
-          </ShadcnSelect.SelectGroup>
-        </ShadcnSelect.SelectContent>
+        <ShadcnSelect.SelectPositioner>
+          <ShadcnSelect.SelectContent>
+            <ShadcnSelect.SelectGroup>
+              <ShadcnSelect.SelectLabel>{label}</ShadcnSelect.SelectLabel>
+              {values.map(value => (
+                <ShadcnSelect.SelectItem key={value.value} value={value.value}>
+                  {value.label}
+                </ShadcnSelect.SelectItem>
+              ))}
+            </ShadcnSelect.SelectGroup>
+          </ShadcnSelect.SelectContent>
+        </ShadcnSelect.SelectPositioner>
       </ShadcnSelect.Select>
       {field.state.meta.isTouched && <ErrorMessages errors={errors} />}
     </div>

@@ -25,13 +25,18 @@ import {
 import { cn } from '@/lib/utils';
 
 interface Props {
-  isLoading: boolean;
+  isLoading?: boolean;
   table: TableType<any>;
   columns: ColumnDef<any>[];
   className?: string;
 }
 
-export const Datatable = ({ isLoading, table, columns, className }: Props) => {
+export const Datatable = ({
+  isLoading = false,
+  table,
+  columns,
+  className,
+}: Props) => {
   'use no memo';
 
   const { pageSize } = table.getState().pagination;

@@ -1,4 +1,6 @@
 import { PageTitle } from '@/hooks/page-title';
+import { lessonCollection } from '@/integrations/collections/lessons';
+import { useLiveQuery } from '@tanstack/react-db';
 import { createFileRoute } from '@tanstack/react-router';
 import {
   getCoreRowModel,
@@ -23,9 +25,11 @@ export const Route = createFileRoute('/dash/_sidebar/lessons')({
 
 function RouteComponent() {
   'use no memo';
-  const queryData = queryApi.useQuery('get', '/lessons/');
+  const { data: lessons } = useLiveQuery(q =>
+    q.from({ lesson: lessonCollection })
+  );
   const table = useReactTable({
-    data: queryData.data ?? [],
+    data: lessons ?? [],
     columns,
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
@@ -40,11 +44,7 @@ function RouteComponent() {
   return (
     <div className="space-y-4">
       <PageTitle>Dersler</PageTitle>
-      <Datatable
-        isLoading={queryData.isLoading}
-        table={table}
-        columns={columns}
-      />
+      <Datatable table={table} columns={columns} />
       <TableNav table={table} />
     </div>
   );

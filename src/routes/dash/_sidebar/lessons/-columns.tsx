@@ -1,8 +1,9 @@
-import { useQueryClient } from '@tanstack/react-query';
+import { useState } from 'react';
+
+import { lessonCollection } from '@/integrations/collections/lessons';
 import { ColumnDef } from '@tanstack/react-table';
 import { type } from 'arktype';
 import { EditIcon } from 'lucide-react';
-import { toast } from 'sonner';
 
 import { useAppForm } from '@/components/form';
 import { Button } from '@/components/ui/button';
@@ -14,7 +15,6 @@ import {
   DialogTrigger,
 } from '@/components/ui/dialog';
 
-import { api, queryApi } from '@/lib/api';
 import { components } from '@/lib/types/api-schema';
 
 export const columns: ColumnDef<components['schemas']['lesson']>[] = [
@@ -37,7 +37,7 @@ export const columns: ColumnDef<components['schemas']['lesson']>[] = [
 ];
 
 function EditRow({ row }: { row: components['schemas']['lesson'] }) {
-  const queryClient = useQueryClient();
+  const [open, setOpen] = useState(false);
   const form = useAppForm({
     defaultValues: row,
     validators: {
@@ -47,26 +47,16 @@ function EditRow({ row }: { row: components['schemas']['lesson'] }) {
         name_normalized: 'string',
       }),
     },
-    onSubmit: async ({ value }) => {
-      const res = await api.PATCH('/lessons/{id}', {
-        params: {
-          path: { id: value.id },
-        },
-        body: value,
+    onSubmit: ({ value }) => {
+      lessonCollection.update(value.id, draft => {
+        draft.name = value.name;
+        draft.name_normalized = value.name_normalized;
       });
-      if (res.error) {
-        console.log(res.error);
-        toast.error(res);
-      }
-
-      await queryClient.setQueryData(
-        queryApi.queryOptions('get', '/lessons/').queryKey,
-        res.data
-      );
+      setOpen(false);
     },
   });
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger
         render={
           <Button size={'datatable'} variant={'outline'}>

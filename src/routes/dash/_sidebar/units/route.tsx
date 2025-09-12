@@ -1,4 +1,6 @@
 import { PageTitle } from '@/hooks/page-title';
+import { unitCollection } from '@/integrations/collections/units';
+import { useLiveQuery } from '@tanstack/react-db';
 import { createFileRoute } from '@tanstack/react-router';
 import {
   getCoreRowModel,
@@ -23,9 +25,9 @@ export const Route = createFileRoute('/dash/_sidebar/units')({
 
 function RouteComponent() {
   'use no memo';
-  const queryData = queryApi.useQuery('get', '/units/');
+  const { data } = useLiveQuery(q => q.from({ lesson: unitCollection }));
   const table = useReactTable({
-    data: queryData.data ?? [],
+    data: data ?? [],
     columns,
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
@@ -40,11 +42,7 @@ function RouteComponent() {
   return (
     <div className="space-y-4">
       <PageTitle>Üniteler</PageTitle>
-      <Datatable
-        isLoading={queryData.isLoading}
-        table={table}
-        columns={columns}
-      />
+      <Datatable table={table} columns={columns} />
       <TableNav table={table} />
     </div>
   );
