@@ -3,9 +3,10 @@ import { useState } from 'react';
 import { ClassOptionsSelect } from '@/constants/filter-options';
 import { useLessonsSelectOptions } from '@/hooks/use-lessons-units-select-options';
 import { unitCollection } from '@/integrations/collections/units';
+import { Link } from '@tanstack/react-router';
 import { ColumnDef } from '@tanstack/react-table';
 import { type } from 'arktype';
-import { EditIcon } from 'lucide-react';
+import { EditIcon, LinkIcon } from 'lucide-react';
 
 import { useAppForm } from '@/components/form';
 import { Button } from '@/components/ui/button';
@@ -24,6 +25,16 @@ export const columns: ColumnDef<components['schemas']['unit']>[] = [
   {
     accessorKey: 'id',
     header: 'Id',
+    cell: ({ row }) => (
+      <Link
+        to="/dash/units/$unitId"
+        params={{ unitId: row.original.id.toString() }}
+        className="flex gap-2 justify-center items-center"
+      >
+        {row.original.id}
+        <LinkIcon className="size-3" />
+      </Link>
+    ),
   },
   {
     accessorKey: 'name',

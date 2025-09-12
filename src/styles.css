@@ -16,7 +16,7 @@ h1,
 h2,
 h3,
 h4 {
-	@apply text-xl font-bold;
+	@apply text-lg font-bold sm:text-xl;
 }
 
 :root {

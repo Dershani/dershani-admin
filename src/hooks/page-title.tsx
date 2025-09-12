@@ -9,7 +9,7 @@ const TitleContext = createContext<
 >(null);
 
 export function PageTitleProvider({ children }: { children: React.ReactNode }) {
-  const [title, setTitle] = useState<string | undefined>('light');
+  const [title, setTitle] = useState<string | undefined>('');
   return <TitleContext value={[title, setTitle]}>{children}</TitleContext>;
 }
 

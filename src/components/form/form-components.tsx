@@ -86,7 +86,7 @@ export function TextField({
         {label}
       </Label>
       <Input
-        value={field.state.value}
+        value={field.state.value ?? ''}
         placeholder={placeholder}
         onBlur={field.handleBlur}
         onChange={e => field.handleChange(e.target.value)}
@@ -144,7 +144,7 @@ export function Select({
         multiple={false}
         items={values}
         name={field.name}
-        value={field.state.value}
+        value={field.state.value ?? ''}
         onValueChange={value => field.handleChange(value as string)}
       >
         <ShadcnSelect.SelectTrigger className="w-full">
@@ -198,7 +198,7 @@ export function Switch({ label }: { label: string }) {
         <ShadcnSwitch
           id={label}
           onBlur={field.handleBlur}
-          checked={field.state.value}
+          checked={field.state.value ?? false}
           onCheckedChange={checked => field.handleChange(checked)}
         />
         <Label htmlFor={label}>{label}</Label>

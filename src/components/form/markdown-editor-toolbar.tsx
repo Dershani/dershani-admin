@@ -46,7 +46,6 @@ const withRender = (
   ...command,
   icon: <Icon className="size-3" />,
   render: (cmd, disabled, executeCommand) => {
-    console.log('hiiii', cmd);
     return (
       <Tooltip>
         <TooltipTrigger asChild>

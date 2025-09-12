@@ -15,7 +15,7 @@ import { notFoundRedirectOptions } from '@/lib/redirect-route-options';
 
 import { columns } from './-columns';
 
-export const Route = createFileRoute('/dash/_sidebar/subjects')({
+export const Route = createFileRoute('/dash/_sidebar/subjects/')({
   ...notFoundRedirectOptions('/dash/subjects'),
   component: RouteComponent,
   loader: ({ context: { queryClient } }) => {

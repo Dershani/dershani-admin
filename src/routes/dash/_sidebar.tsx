@@ -29,7 +29,7 @@ function RouteComponent() {
                 <span className="sr-only">Toggle Menu</span>
               </SidebarTrigger>
             </Button>
-            <h1>{title}</h1>
+            <h1 className="truncate">{title}</h1>
           </header>
           <main className="py-4">
             <Outlet />
