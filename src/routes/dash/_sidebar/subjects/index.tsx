@@ -10,7 +10,6 @@ import {
 
 import { Datatable, TableNav } from '@/components/datatable';
 
-import { queryApi } from '@/lib/api';
 import { notFoundRedirectOptions } from '@/lib/redirect-route-options';
 
 import { columns } from './-columns';
@@ -18,11 +17,6 @@ import { columns } from './-columns';
 export const Route = createFileRoute('/dash/_sidebar/subjects/')({
   ...notFoundRedirectOptions('/dash/subjects'),
   component: RouteComponent,
-  loader: ({ context: { queryClient } }) => {
-    queryClient.ensureQueryData(
-      queryApi.queryOptions('get', '/subjects/admin')
-    );
-  },
 });
 
 function RouteComponent() {
