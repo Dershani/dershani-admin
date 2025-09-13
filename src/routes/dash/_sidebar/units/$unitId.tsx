@@ -25,6 +25,7 @@ function RouteComponent() {
   const { unitId } = Route.useParams();
   const {
     data: [unit],
+    isLoading,
   } = useLiveQuery(q =>
     q
       .from({ units: unitCollection })
@@ -51,8 +52,12 @@ function RouteComponent() {
 
   return (
     <div className="space-y-4">
-      <PageTitle>{`Ünite - ${unit?.name} - ${unit?.class_no}. Sınıf`}</PageTitle>
-      <Datatable table={table} columns={columns} />
+      <PageTitle>
+        {!isLoading
+          ? `Ünite - ${unit?.name} - ${unit?.class_no}. Sınıf`
+          : 'Ünite -'}
+      </PageTitle>
+      <Datatable isLoading={isLoading} table={table} columns={columns} />
       <TableNav table={table} />
     </div>
   );

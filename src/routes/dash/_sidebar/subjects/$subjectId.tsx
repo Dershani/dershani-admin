@@ -1,3 +1,5 @@
+import { useEffect } from 'react';
+
 import { PageTitle } from '@/hooks/page-title';
 import {
   useLessonsSelectOptions,
@@ -23,8 +25,16 @@ function RouteComponent() {
   const lessonsSelectValues = useLessonsSelectOptions();
   const unitsSelectValues = useUnitsSelectOptions();
   const navigator = useNavigate();
+  const navigateBack = () => {
+    if (typeof window !== 'undefined' && window.history.length > 1) {
+      window.history.back();
+      return;
+    }
+    navigator({ to: '/dash/subjects' });
+  };
   const {
     data: [subject],
+    isLoading,
   } = useLiveQuery(q =>
     q
       .from({ subject: subjectCollection })
@@ -55,13 +65,23 @@ function RouteComponent() {
         draft.summary = value.summary;
         draft.finished = value.finished;
       });
-      if (typeof window !== 'undefined' && window.history.length > 1) {
-        window.history.back();
-        return;
-      }
-      navigator({ to: '/dash/subjects' });
+      navigateBack();
     },
   });
+
+  useEffect(() => {
+    if (subject === undefined && !isLoading) {
+      navigateBack();
+    }
+  }, [subject, isLoading]);
+
+  if (isLoading) {
+    return (
+      <div className="space-y-4">
+        <PageTitle>{`Konu - `}</PageTitle>
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-4">

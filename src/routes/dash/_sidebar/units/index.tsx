@@ -21,7 +21,9 @@ export const Route = createFileRoute('/dash/_sidebar/units/')({
 
 function RouteComponent() {
   'use no memo';
-  const { data } = useLiveQuery(q => q.from({ lesson: unitCollection }));
+  const { data, isLoading } = useLiveQuery(q =>
+    q.from({ lesson: unitCollection })
+  );
   const table = useReactTable({
     data: data ?? [],
     columns,
@@ -38,7 +40,7 @@ function RouteComponent() {
   return (
     <div className="space-y-4">
       <PageTitle>Üniteler</PageTitle>
-      <Datatable table={table} columns={columns} />
+      <Datatable isLoading={isLoading} table={table} columns={columns} />
       <TableNav table={table} />
     </div>
   );
