@@ -4,12 +4,12 @@
   "type": "module",
   "scripts": {
     "typecheck": "tsc --noEmit",
-    "dev": "rsbuild dev --open",
+    "dev": "rsbuild dev --open --port 3031",
     "build": "rsbuild build",
     "doc-dev": "RSDOCTOR=true rsbuild dev --open",
     "doc-build": "RSDOCTOR=true rsbuild build",
     "preview": "rsbuild preview",
-    "apigen": "npx openapi-typescript http://localhost:3003/swagger/json -o src/lib/types/api-schema.ts"
+    "apigen": "npx openapi-typescript https://api.dershani.com/openapi/json -o src/lib/types/api-schema.ts"
   },
   "packageManager": "bun",
   "dependencies": {

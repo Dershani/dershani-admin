@@ -273,11 +273,14 @@ export interface operations {
         };
         requestBody?: never;
         responses: {
+            /** @description Response for status 200 */
             200: {
                 headers: {
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "text/plain": string;
+                };
             };
         };
     };
@@ -290,14 +293,31 @@ export interface operations {
         };
         requestBody?: never;
         responses: {
+            /** @description Response for status 200 */
             200: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
                     "application/json": components["schemas"]["lesson_array"];
-                    "multipart/form-data": components["schemas"]["lesson_array"];
-                    "text/plain": components["schemas"]["lesson_array"];
+                };
+            };
+            /** @description Response for status 422 */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @constant */
+                        type: "validation";
+                        on: string;
+                        summary?: string;
+                        message?: string;
+                        found?: unknown;
+                        property?: string;
+                        expected?: string;
+                    };
                 };
             };
         };
@@ -312,16 +332,46 @@ export interface operations {
         requestBody: {
             content: {
                 "application/json": components["schemas"]["lesson_create"];
+                "application/x-www-form-urlencoded": components["schemas"]["lesson_create"];
                 "multipart/form-data": components["schemas"]["lesson_create"];
-                "text/plain": components["schemas"]["lesson_create"];
             };
         };
         responses: {
+            /** @description Response for status 200 */
             200: {
                 headers: {
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "text/plain": "OK";
+                };
+            };
+            /** @description Response for status 401 */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "text/plain": "Unauthorized";
+                };
+            };
+            /** @description Response for status 422 */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @constant */
+                        type: "validation";
+                        on: string;
+                        summary?: string;
+                        message?: string;
+                        found?: unknown;
+                        property?: string;
+                        expected?: string;
+                    };
+                };
             };
         };
     };
@@ -336,11 +386,41 @@ export interface operations {
         };
         requestBody?: never;
         responses: {
+            /** @description Response for status 200 */
             200: {
                 headers: {
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "text/plain": "OK";
+                };
+            };
+            /** @description Response for status 401 */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "text/plain": "Unauthorized";
+                };
+            };
+            /** @description Response for status 422 */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @constant */
+                        type: "validation";
+                        on: string;
+                        summary?: string;
+                        message?: string;
+                        found?: unknown;
+                        property?: string;
+                        expected?: string;
+                    };
+                };
             };
         };
     };
@@ -356,19 +436,45 @@ export interface operations {
         requestBody: {
             content: {
                 "application/json": components["schemas"]["lesson"];
+                "application/x-www-form-urlencoded": components["schemas"]["lesson"];
                 "multipart/form-data": components["schemas"]["lesson"];
-                "text/plain": components["schemas"]["lesson"];
             };
         };
         responses: {
+            /** @description Response for status 200 */
             200: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
                     "application/json": components["schemas"]["lesson_array"];
-                    "multipart/form-data": components["schemas"]["lesson_array"];
-                    "text/plain": components["schemas"]["lesson_array"];
+                };
+            };
+            /** @description Response for status 401 */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "text/plain": "Unauthorized";
+                };
+            };
+            /** @description Response for status 422 */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @constant */
+                        type: "validation";
+                        on: string;
+                        summary?: string;
+                        message?: string;
+                        found?: unknown;
+                        property?: string;
+                        expected?: string;
+                    };
                 };
             };
         };
@@ -382,14 +488,31 @@ export interface operations {
         };
         requestBody?: never;
         responses: {
+            /** @description Response for status 200 */
             200: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
                     "application/json": components["schemas"]["unit_array"];
-                    "multipart/form-data": components["schemas"]["unit_array"];
-                    "text/plain": components["schemas"]["unit_array"];
+                };
+            };
+            /** @description Response for status 422 */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @constant */
+                        type: "validation";
+                        on: string;
+                        summary?: string;
+                        message?: string;
+                        found?: unknown;
+                        property?: string;
+                        expected?: string;
+                    };
                 };
             };
         };
@@ -404,16 +527,46 @@ export interface operations {
         requestBody: {
             content: {
                 "application/json": components["schemas"]["unit_create"];
+                "application/x-www-form-urlencoded": components["schemas"]["unit_create"];
                 "multipart/form-data": components["schemas"]["unit_create"];
-                "text/plain": components["schemas"]["unit_create"];
             };
         };
         responses: {
+            /** @description Response for status 200 */
             200: {
                 headers: {
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "text/plain": "OK";
+                };
+            };
+            /** @description Response for status 401 */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "text/plain": "Unauthorized";
+                };
+            };
+            /** @description Response for status 422 */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @constant */
+                        type: "validation";
+                        on: string;
+                        summary?: string;
+                        message?: string;
+                        found?: unknown;
+                        property?: string;
+                        expected?: string;
+                    };
+                };
             };
         };
     };
@@ -428,11 +581,41 @@ export interface operations {
         };
         requestBody?: never;
         responses: {
+            /** @description Response for status 200 */
             200: {
                 headers: {
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "text/plain": "OK";
+                };
+            };
+            /** @description Response for status 401 */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "text/plain": "Unauthorized";
+                };
+            };
+            /** @description Response for status 422 */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @constant */
+                        type: "validation";
+                        on: string;
+                        summary?: string;
+                        message?: string;
+                        found?: unknown;
+                        property?: string;
+                        expected?: string;
+                    };
+                };
             };
         };
     };
@@ -448,19 +631,45 @@ export interface operations {
         requestBody: {
             content: {
                 "application/json": components["schemas"]["unit"];
+                "application/x-www-form-urlencoded": components["schemas"]["unit"];
                 "multipart/form-data": components["schemas"]["unit"];
-                "text/plain": components["schemas"]["unit"];
             };
         };
         responses: {
+            /** @description Response for status 200 */
             200: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
                     "application/json": components["schemas"]["unit_array"];
-                    "multipart/form-data": components["schemas"]["unit_array"];
-                    "text/plain": components["schemas"]["unit_array"];
+                };
+            };
+            /** @description Response for status 401 */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "text/plain": "Unauthorized";
+                };
+            };
+            /** @description Response for status 422 */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @constant */
+                        type: "validation";
+                        on: string;
+                        summary?: string;
+                        message?: string;
+                        found?: unknown;
+                        property?: string;
+                        expected?: string;
+                    };
                 };
             };
         };
@@ -474,14 +683,31 @@ export interface operations {
         };
         requestBody?: never;
         responses: {
+            /** @description Response for status 200 */
             200: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
                     "application/json": components["schemas"]["subject_array"];
-                    "multipart/form-data": components["schemas"]["subject_array"];
-                    "text/plain": components["schemas"]["subject_array"];
+                };
+            };
+            /** @description Response for status 422 */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @constant */
+                        type: "validation";
+                        on: string;
+                        summary?: string;
+                        message?: string;
+                        found?: unknown;
+                        property?: string;
+                        expected?: string;
+                    };
                 };
             };
         };
@@ -496,16 +722,46 @@ export interface operations {
         requestBody: {
             content: {
                 "application/json": components["schemas"]["subject_create"];
+                "application/x-www-form-urlencoded": components["schemas"]["subject_create"];
                 "multipart/form-data": components["schemas"]["subject_create"];
-                "text/plain": components["schemas"]["subject_create"];
             };
         };
         responses: {
+            /** @description Response for status 200 */
             200: {
                 headers: {
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "text/plain": "OK";
+                };
+            };
+            /** @description Response for status 401 */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "text/plain": "Unauthorized";
+                };
+            };
+            /** @description Response for status 422 */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @constant */
+                        type: "validation";
+                        on: string;
+                        summary?: string;
+                        message?: string;
+                        found?: unknown;
+                        property?: string;
+                        expected?: string;
+                    };
+                };
             };
         };
     };
@@ -518,14 +774,40 @@ export interface operations {
         };
         requestBody?: never;
         responses: {
+            /** @description Response for status 200 */
             200: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
                     "application/json": components["schemas"]["subject_array"];
-                    "multipart/form-data": components["schemas"]["subject_array"];
-                    "text/plain": components["schemas"]["subject_array"];
+                };
+            };
+            /** @description Response for status 401 */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "text/plain": "Unauthorized";
+                };
+            };
+            /** @description Response for status 422 */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @constant */
+                        type: "validation";
+                        on: string;
+                        summary?: string;
+                        message?: string;
+                        found?: unknown;
+                        property?: string;
+                        expected?: string;
+                    };
                 };
             };
         };
@@ -541,11 +823,41 @@ export interface operations {
         };
         requestBody?: never;
         responses: {
+            /** @description Response for status 200 */
             200: {
                 headers: {
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "text/plain": "OK";
+                };
+            };
+            /** @description Response for status 401 */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "text/plain": "Unauthorized";
+                };
+            };
+            /** @description Response for status 422 */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @constant */
+                        type: "validation";
+                        on: string;
+                        summary?: string;
+                        message?: string;
+                        found?: unknown;
+                        property?: string;
+                        expected?: string;
+                    };
+                };
             };
         };
     };
@@ -561,19 +873,45 @@ export interface operations {
         requestBody: {
             content: {
                 "application/json": components["schemas"]["subject"];
+                "application/x-www-form-urlencoded": components["schemas"]["subject"];
                 "multipart/form-data": components["schemas"]["subject"];
-                "text/plain": components["schemas"]["subject"];
             };
         };
         responses: {
+            /** @description Response for status 200 */
             200: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
                     "application/json": components["schemas"]["subject_array"];
-                    "multipart/form-data": components["schemas"]["subject_array"];
-                    "text/plain": components["schemas"]["subject_array"];
+                };
+            };
+            /** @description Response for status 401 */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "text/plain": "Unauthorized";
+                };
+            };
+            /** @description Response for status 422 */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @constant */
+                        type: "validation";
+                        on: string;
+                        summary?: string;
+                        message?: string;
+                        found?: unknown;
+                        property?: string;
+                        expected?: string;
+                    };
                 };
             };
         };
@@ -587,14 +925,31 @@ export interface operations {
         };
         requestBody?: never;
         responses: {
+            /** @description Response for status 200 */
             200: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
                     "application/json": components["schemas"]["dump"];
-                    "multipart/form-data": components["schemas"]["dump"];
-                    "text/plain": components["schemas"]["dump"];
+                };
+            };
+            /** @description Response for status 422 */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @constant */
+                        type: "validation";
+                        on: string;
+                        summary?: string;
+                        message?: string;
+                        found?: unknown;
+                        property?: string;
+                        expected?: string;
+                    };
                 };
             };
         };
@@ -608,14 +963,40 @@ export interface operations {
         };
         requestBody?: never;
         responses: {
+            /** @description Response for status 200 */
             200: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
                     "application/json": components["schemas"]["dump"];
-                    "multipart/form-data": components["schemas"]["dump"];
-                    "text/plain": components["schemas"]["dump"];
+                };
+            };
+            /** @description Response for status 401 */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "text/plain": "Unauthorized";
+                };
+            };
+            /** @description Response for status 422 */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @constant */
+                        type: "validation";
+                        on: string;
+                        summary?: string;
+                        message?: string;
+                        found?: unknown;
+                        property?: string;
+                        expected?: string;
+                    };
                 };
             };
         };
