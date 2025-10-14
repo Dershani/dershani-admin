@@ -1,6 +1,6 @@
 import { PageTitle } from '@/hooks/page-title';
+import { collections } from '@/integrations/collections';
 import { subjectCollection } from '@/integrations/collections/subjects';
-import { unitCollection } from '@/integrations/collections/units';
 import { eq, useLiveQuery } from '@tanstack/react-db';
 import { createFileRoute } from '@tanstack/react-router';
 import {
@@ -28,7 +28,7 @@ function RouteComponent() {
     isLoading,
   } = useLiveQuery(q =>
     q
-      .from({ units: unitCollection })
+      .from({ units: collections.units })
       .where(({ units }) => eq(units.id, Number(unitId)))
   );
 

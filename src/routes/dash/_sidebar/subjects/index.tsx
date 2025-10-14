@@ -1,6 +1,6 @@
 import { PageTitle } from '@/hooks/page-title';
 import { usePagination } from '@/hooks/use-pagination';
-import { subjectCollection } from '@/integrations/collections/subjects';
+import { collections } from '@/integrations/collections';
 import { useLiveQuery } from '@tanstack/react-db';
 import { createFileRoute } from '@tanstack/react-router';
 import {
@@ -28,7 +28,7 @@ function RouteComponent() {
   'use no memo';
   const { pagination, onPaginationChange } = usePagination();
   const { data, isLoading } = useLiveQuery(q =>
-    q.from({ lesson: subjectCollection })
+    q.from({ subjects: collections.subjects })
   );
   const table = useReactTable({
     data: data ?? [],

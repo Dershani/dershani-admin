@@ -1,5 +1,5 @@
 import { PageTitle } from '@/hooks/page-title';
-import { lessonCollection } from '@/integrations/collections/lessons';
+import { collections } from '@/integrations/collections';
 import { useLiveQuery } from '@tanstack/react-db';
 import { createFileRoute } from '@tanstack/react-router';
 import {
@@ -22,7 +22,7 @@ export const Route = createFileRoute('/dash/_sidebar/lessons')({
 function RouteComponent() {
   'use no memo';
   const { data: lessons, isLoading } = useLiveQuery(q =>
-    q.from({ lesson: lessonCollection })
+    q.from({ lesson: collections.lessons })
   );
   const table = useReactTable({
     data: lessons ?? [],

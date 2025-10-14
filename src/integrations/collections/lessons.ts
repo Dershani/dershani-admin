@@ -7,6 +7,7 @@ import { getContext } from '../tanstack-query/root-provider';
 
 export const lessonCollection = createCollection(
   queryCollectionOptions({
+    startSync: true,
     queryClient: getContext().queryClient,
     queryKey: ['lessons'],
     queryFn: async () => {

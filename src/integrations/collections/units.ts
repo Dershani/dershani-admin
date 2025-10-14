@@ -7,6 +7,7 @@ import { getContext } from '../tanstack-query/root-provider';
 
 export const unitCollection = createCollection(
   queryCollectionOptions({
+    startSync: true,
     queryClient: getContext().queryClient,
     queryKey: ['units'],
     queryFn: async () => {

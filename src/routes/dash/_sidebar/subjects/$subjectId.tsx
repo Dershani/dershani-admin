@@ -5,7 +5,7 @@ import {
   useLessonsSelectOptions,
   useUnitsSelectOptions,
 } from '@/hooks/use-lessons-units-select-options';
-import { subjectCollection } from '@/integrations/collections/subjects';
+import { collections } from '@/integrations/collections';
 import { eq, useLiveQuery } from '@tanstack/react-db';
 import { createFileRoute, useNavigate } from '@tanstack/react-router';
 import { type } from 'arktype';
@@ -37,7 +37,7 @@ function RouteComponent() {
     isLoading,
   } = useLiveQuery(q =>
     q
-      .from({ subject: subjectCollection })
+      .from({ subject: collections.subjects })
       .where(({ subject }) => eq(subject.id, Number(subjectId)))
   );
 
@@ -56,7 +56,7 @@ function RouteComponent() {
       }),
     },
     onSubmit: ({ value }) => {
-      subjectCollection.update(value.id, draft => {
+      collections.subjects.update(value.id, draft => {
         draft.lesson = value.lesson;
         draft.unit = value.unit;
         draft.name = value.name;

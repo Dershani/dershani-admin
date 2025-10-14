@@ -7,6 +7,7 @@ import { getContext } from '../tanstack-query/root-provider';
 
 export const subjectCollection = createCollection(
   queryCollectionOptions({
+    startSync: true,
     queryClient: getContext().queryClient,
     queryKey: ['subjects'],
     queryFn: async () => {
