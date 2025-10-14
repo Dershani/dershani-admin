@@ -1,4 +1,5 @@
 import { PageTitle } from '@/hooks/page-title';
+import { usePagination } from '@/hooks/use-pagination';
 import { unitCollection } from '@/integrations/collections/units';
 import { useLiveQuery } from '@tanstack/react-db';
 import { createFileRoute } from '@tanstack/react-router';
@@ -7,6 +8,7 @@ import {
   getPaginationRowModel,
   useReactTable,
 } from '@tanstack/react-table';
+import { type } from 'arktype';
 
 import { Datatable, TableNav } from '@/components/datatable';
 
@@ -17,10 +19,14 @@ import { columns } from './-columns';
 export const Route = createFileRoute('/dash/_sidebar/units/')({
   ...notFoundRedirectOptions('/dash/units'),
   component: RouteComponent,
+  validateSearch: type({
+    'page?': 'number',
+  }),
 });
 
 function RouteComponent() {
   'use no memo';
+  const { pagination, onPaginationChange } = usePagination();
   const { data, isLoading } = useLiveQuery(q =>
     q.from({ lesson: unitCollection })
   );
@@ -30,11 +36,10 @@ function RouteComponent() {
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
     autoResetPageIndex: false,
-    initialState: {
-      pagination: {
-        pageSize: 14,
-      },
+    state: {
+      pagination,
     },
+    onPaginationChange,
   });
 
   return (
