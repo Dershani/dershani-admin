@@ -11,6 +11,7 @@ import { createFileRoute, useNavigate } from '@tanstack/react-router';
 import { type } from 'arktype';
 
 import { useAppForm } from '@/components/form';
+import { Button } from '@/components/ui/button';
 
 import { notFoundRedirectOptions } from '@/lib/redirect-route-options';
 
@@ -35,10 +36,12 @@ function RouteComponent() {
   const {
     data: [subject],
     isLoading,
-  } = useLiveQuery(q =>
-    q
-      .from({ subject: collections.subjects })
-      .where(({ subject }) => eq(subject.id, Number(subjectId)))
+  } = useLiveQuery(
+    q =>
+      q
+        .from({ subject: collections.subjects })
+        .where(({ subject }) => eq(subject.id, Number(subjectId))),
+    [subjectId]
   );
 
   const form = useAppForm({
@@ -55,7 +58,11 @@ function RouteComponent() {
         finished: 'boolean',
       }),
     },
-    onSubmit: ({ value }) => {
+    onSubmitMeta: {
+      skipGoBack: false,
+      goNext: false,
+    },
+    onSubmit({ value, meta }) {
       collections.subjects.update(value.id, draft => {
         draft.lesson = value.lesson;
         draft.unit = value.unit;
@@ -65,7 +72,16 @@ function RouteComponent() {
         draft.summary = value.summary;
         draft.finished = value.finished;
       });
-      navigateBack();
+      if (!meta.skipGoBack) navigateBack();
+      if (meta.goNext) {
+        navigator({
+          to: '/dash/subjects/$subjectId',
+          params: {
+            subjectId: (value.id + 1).toString(),
+          },
+        });
+        form.reset();
+      }
     },
   });
 
@@ -85,12 +101,9 @@ function RouteComponent() {
 
   return (
     <div className="space-y-4">
-      <PageTitle>{`Konu - ${subject?.name}`}</PageTitle>
+      <PageTitle>{`Konu - ${subject?.name} (${subject?.id})`}</PageTitle>
       <form.AppForm>
         <form.FormBase>
-          <form.AppField name="id">
-            {field => <field.TextField label="Id" type="number" disabled />}
-          </form.AppField>
           <form.AppField name="name">
             {field => <field.TextField label="İsim" />}
           </form.AppField>
@@ -114,7 +127,18 @@ function RouteComponent() {
           <form.AppField name="finished">
             {field => <field.Switch label="Yayına hazır mı" />}
           </form.AppField>
-          <form.SubscribeButton label="Kaydet" />
+          <div className="flex gap-2">
+            <form.SubscribeButton label="Kaydet" />
+            <Button
+              type="button"
+              onClick={() => {
+                console.log('GO NEXT', subjectId);
+                form.handleSubmit({ skipGoBack: true, goNext: true });
+              }}
+            >
+              Kaydet ve İlerle
+            </Button>
+          </div>
         </form.FormBase>
       </form.AppForm>
     </div>
