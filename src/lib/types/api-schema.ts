@@ -20,6 +20,22 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/db/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["getDb"];
+        put: operations["putDb"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/lessons/": {
         parameters: {
             query?: never;
@@ -188,6 +204,7 @@ export interface components {
             class_no: number;
             name: string;
             name_normalized: string;
+            summary: (string | null) | null;
         };
         unit_array: {
             id: number;
@@ -195,12 +212,14 @@ export interface components {
             class_no: number;
             name: string;
             name_normalized: string;
+            summary: (string | null) | null;
         }[];
         unit_create: {
             lesson: number;
             class_no: number;
             name: string;
             name_normalized: string;
+            summary: (string | null) | null;
         };
         subject: {
             id: number;
@@ -253,6 +272,7 @@ export interface components {
                 class_no: number;
                 name: string;
                 name_normalized: string;
+                summary: (string | null) | null;
             }[];
         };
     };
@@ -280,6 +300,78 @@ export interface operations {
                 };
                 content: {
                     "text/plain": string;
+                };
+            };
+        };
+    };
+    getDb: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: never;
+    };
+    putDb: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": {
+                    /**
+                     * Format: binary
+                     * @default File
+                     */
+                    file: string;
+                };
+                "application/x-www-form-urlencoded": {
+                    /**
+                     * Format: binary
+                     * @default File
+                     */
+                    file: string;
+                };
+                "multipart/form-data": {
+                    /**
+                     * Format: binary
+                     * @default File
+                     */
+                    file: string;
+                };
+            };
+        };
+        responses: {
+            /** @description Response for status 401 */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "text/plain": "Unauthorized";
+                };
+            };
+            /** @description Response for status 422 */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @constant */
+                        type: "validation";
+                        on: string;
+                        summary?: string;
+                        message?: string;
+                        found?: unknown;
+                        property?: string;
+                        expected?: string;
+                    };
                 };
             };
         };

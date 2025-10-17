@@ -45,6 +45,13 @@ export const columns: ColumnDef<components['schemas']['unit']>[] = [
     header: 'Normal İsim',
   },
   {
+    accessorKey: 'summary',
+    header: 'Özet',
+    cell: ({ getValue }) => (
+      <span className="max-w-50 truncate block">{getValue() as string}</span>
+    ),
+  },
+  {
     accessorKey: 'class_no',
     header: 'Sınıf',
     cell: ({ getValue }) => <span>{getValue() as number}. Sınıf</span>,
@@ -77,6 +84,7 @@ function EditRow({ row }: { row: components['schemas']['unit'] }) {
         id: 'number',
         lesson: 'number',
         class_no: 'number',
+        summary: 'string',
         name: 'string',
         name_normalized: 'string',
       }),
@@ -85,6 +93,7 @@ function EditRow({ row }: { row: components['schemas']['unit'] }) {
       unitCollection.update(value.id, draft => {
         draft.lesson = value.lesson;
         draft.class_no = value.class_no;
+        draft.summary = value.summary;
         draft.name = value.name;
         draft.name_normalized = value.name_normalized;
       });
@@ -118,6 +127,9 @@ function EditRow({ row }: { row: components['schemas']['unit'] }) {
                 {field => (
                   <field.Select label="Sınıf" values={ClassOptionsSelect} />
                 )}
+              </form.AppField>
+              <form.AppField name="summary">
+                {field => <field.TextArea label="Özet" />}
               </form.AppField>
               <form.AppField name="lesson">
                 {field => (
