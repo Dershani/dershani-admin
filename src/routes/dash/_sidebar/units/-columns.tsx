@@ -97,6 +97,7 @@ function EditRow({ row }: { row: ApiReturnTypes<'/units/'>[number] }) {
         draft.lesson = value.lesson;
         draft.class_no = value.class_no;
         draft.summary = value.summary;
+        draft.summary_length = value.summary?.length ?? draft.summary_length;
         draft.name = value.name;
         draft.name_normalized = value.name_normalized;
       });
