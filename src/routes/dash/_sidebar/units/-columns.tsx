@@ -18,10 +18,9 @@ import {
   DialogTrigger,
 } from '@/components/ui/dialog';
 
-import { queryApi } from '@/lib/api';
-import { components } from '@/lib/types/api-schema';
+import { ApiReturnTypes, queryApi } from '@/lib/api';
 
-export const columns: ColumnDef<components['schemas']['unit']>[] = [
+export const columns: ColumnDef<ApiReturnTypes<'/units/'>[number]>[] = [
   {
     accessorKey: 'id',
     header: 'Id',
@@ -52,6 +51,10 @@ export const columns: ColumnDef<components['schemas']['unit']>[] = [
     ),
   },
   {
+    accessorKey: 'summary_length',
+    header: 'Özet Uzunluğu',
+  },
+  {
     accessorKey: 'class_no',
     header: 'Sınıf',
     cell: ({ getValue }) => <span>{getValue() as number}. Sınıf</span>,
@@ -73,7 +76,7 @@ export const columns: ColumnDef<components['schemas']['unit']>[] = [
   },
 ];
 
-function EditRow({ row }: { row: components['schemas']['unit'] }) {
+function EditRow({ row }: { row: ApiReturnTypes<'/units/'>[number] }) {
   const [open, setOpen] = useState(false);
   const lessonsSelectValues = useLessonsSelectOptions();
 

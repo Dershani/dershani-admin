@@ -198,29 +198,6 @@ export interface components {
             name: string;
             name_normalized: string;
         };
-        unit: {
-            id: number;
-            lesson: number;
-            class_no: number;
-            name: string;
-            name_normalized: string;
-            summary: (string | null) | null;
-        };
-        unit_array: {
-            id: number;
-            lesson: number;
-            class_no: number;
-            name: string;
-            name_normalized: string;
-            summary: (string | null) | null;
-        }[];
-        unit_create: {
-            lesson: number;
-            class_no: number;
-            name: string;
-            name_normalized: string;
-            summary: (string | null) | null;
-        };
         subject: {
             id: number;
             lesson: number;
@@ -586,25 +563,15 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["unit_array"];
-                };
-            };
-            /** @description Response for status 422 */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
                     "application/json": {
-                        /** @constant */
-                        type: "validation";
-                        on: string;
-                        summary?: string;
-                        message?: string;
-                        found?: unknown;
-                        property?: string;
-                        expected?: string;
-                    };
+                        summary_length: number;
+                        id: number;
+                        lesson: number;
+                        class_no: number;
+                        name: string;
+                        name_normalized: string;
+                        summary: string | null;
+                    }[];
                 };
             };
         };
@@ -618,9 +585,27 @@ export interface operations {
         };
         requestBody: {
             content: {
-                "application/json": components["schemas"]["unit_create"];
-                "application/x-www-form-urlencoded": components["schemas"]["unit_create"];
-                "multipart/form-data": components["schemas"]["unit_create"];
+                "application/json": {
+                    lesson: number;
+                    class_no: number;
+                    name: string;
+                    name_normalized: string;
+                    summary: (string | null) | null;
+                };
+                "application/x-www-form-urlencoded": {
+                    lesson: number;
+                    class_no: number;
+                    name: string;
+                    name_normalized: string;
+                    summary: (string | null) | null;
+                };
+                "multipart/form-data": {
+                    lesson: number;
+                    class_no: number;
+                    name: string;
+                    name_normalized: string;
+                    summary: (string | null) | null;
+                };
             };
         };
         responses: {
@@ -722,9 +707,30 @@ export interface operations {
         };
         requestBody: {
             content: {
-                "application/json": components["schemas"]["unit"];
-                "application/x-www-form-urlencoded": components["schemas"]["unit"];
-                "multipart/form-data": components["schemas"]["unit"];
+                "application/json": {
+                    id: number;
+                    lesson: number;
+                    class_no: number;
+                    name: string;
+                    name_normalized: string;
+                    summary: (string | null) | null;
+                };
+                "application/x-www-form-urlencoded": {
+                    id: number;
+                    lesson: number;
+                    class_no: number;
+                    name: string;
+                    name_normalized: string;
+                    summary: (string | null) | null;
+                };
+                "multipart/form-data": {
+                    id: number;
+                    lesson: number;
+                    class_no: number;
+                    name: string;
+                    name_normalized: string;
+                    summary: (string | null) | null;
+                };
             };
         };
         responses: {
@@ -734,7 +740,15 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["unit_array"];
+                    "application/json": {
+                        summary_length: number;
+                        id: number;
+                        lesson: number;
+                        class_no: number;
+                        name: string;
+                        name_normalized: string;
+                        summary: string | null;
+                    }[];
                 };
             };
             /** @description Response for status 401 */

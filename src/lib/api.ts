@@ -21,4 +21,13 @@ api.use(authMiddleware);
 
 const queryApi = createClient(api);
 
-export { api, queryApi };
+type ApiReturnTypes<
+  Path extends keyof paths,
+  Method extends keyof paths[Path] = 'get',
+> = paths[Path][Method] extends {
+  responses: { 200: { content: { 'application/json': infer R } } };
+}
+  ? R
+  : never;
+
+export { api, queryApi, type ApiReturnTypes };

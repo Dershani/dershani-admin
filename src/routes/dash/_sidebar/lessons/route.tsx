@@ -5,6 +5,7 @@ import { createFileRoute } from '@tanstack/react-router';
 import {
   getCoreRowModel,
   getPaginationRowModel,
+  getSortedRowModel,
   useReactTable,
 } from '@tanstack/react-table';
 
@@ -29,6 +30,7 @@ function RouteComponent() {
     columns,
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
+    getSortedRowModel: getSortedRowModel(),
     autoResetPageIndex: false,
     initialState: {
       pagination: {

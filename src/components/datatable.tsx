@@ -3,6 +3,7 @@ import { Dispatch, SetStateAction } from 'react';
 import type { Table as TableType } from '@tanstack/react-table';
 import { type ColumnDef, flexRender } from '@tanstack/react-table';
 import { type Table as TanstackTableType } from '@tanstack/react-table';
+import { ChevronDown, ChevronUp } from 'lucide-react';
 import { toast } from 'sonner';
 
 import { Button } from '@/components/ui/button';
@@ -62,7 +63,21 @@ export const Datatable = ({
                   return (
                     <TableHead
                       key={header.id}
-                      className="text-nowrap border-r last:border-r-0"
+                      className={`text-nowrap border-r last:border-r-0 ${
+                        header.column.getCanSort()
+                          ? 'cursor-pointer select-none'
+                          : ''
+                      }`}
+                      onClick={header.column.getToggleSortingHandler()}
+                      title={
+                        header.column.getCanSort()
+                          ? header.column.getNextSortingOrder() === 'asc'
+                            ? 'Sort ascending'
+                            : header.column.getNextSortingOrder() === 'desc'
+                              ? 'Sort descending'
+                              : 'Clear sort'
+                          : undefined
+                      }
                     >
                       {header.isPlaceholder
                         ? null
@@ -70,6 +85,12 @@ export const Datatable = ({
                             header.column.columnDef.header,
                             header.getContext()
                           )}
+                      {{
+                        asc: <ChevronUp className="size-3 inline-block ml-2" />,
+                        desc: (
+                          <ChevronDown className="size-3 inline-block ml-2" />
+                        ),
+                      }[header.column.getIsSorted() as string] ?? null}
                     </TableHead>
                   );
                 })}
