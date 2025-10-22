@@ -1,5 +1,5 @@
 import { PageTitleProvider } from '@/hooks/page-title';
-import { TanstackDevtools } from '@tanstack/react-devtools';
+import { TanStackDevtools } from '@tanstack/react-devtools';
 import type { QueryClient } from '@tanstack/react-query';
 import { Outlet, createRootRouteWithContext } from '@tanstack/react-router';
 import { TanStackRouterDevtoolsPanel } from '@tanstack/react-router-devtools';
@@ -19,7 +19,7 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
       <TooltipProvider>
         <Outlet />
         {import.meta.env.DEV && (
-          <TanstackDevtools
+          <TanStackDevtools
             config={{
               position: 'bottom-left',
             }}

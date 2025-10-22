@@ -2,9 +2,20 @@ import MDEditor, { MDEditorProps } from '@uiw/react-md-editor';
 import katex from 'katex';
 import 'katex/dist/katex.css';
 import { getCodeString } from 'rehype-rewrite';
-import rehypeSanitize from 'rehype-sanitize';
+import rehypeSanitize, { defaultSchema } from 'rehype-sanitize';
 
 import { getCommands, getExtraCommands } from './markdown-editor-toolbar';
+import './react-islands';
+import { rehypeReactIsland } from './rehype-react-island';
+
+const schema = {
+  ...defaultSchema,
+  tagNames: [...(defaultSchema.tagNames || []), 'react-island'],
+  attributes: {
+    ...defaultSchema.attributes,
+    'react-island': ['data-name'],
+  },
+};
 
 export function MarkdownEditor({
   id,
@@ -76,7 +87,11 @@ export function MarkdownEditor({
             return <code className={String(className)}>{children}</code>;
           },
         },
-        rehypePlugins: [rehypeSanitize],
+        rehypePlugins: [[rehypeSanitize, schema], rehypeReactIsland],
+        allowElement: element => {
+          return schema.tagNames.includes(element.tagName);
+        },
+        allowedElements: schema.tagNames,
       }}
     />
   );
