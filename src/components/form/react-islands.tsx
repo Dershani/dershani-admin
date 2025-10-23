@@ -1,6 +1,8 @@
 import React, { Suspense, createElement, lazy } from 'react';
+import ReactDOM from 'react-dom';
 import { type Root, createRoot } from 'react-dom/client';
 
+import PackageJson from '@/../package.json';
 import { createInstance } from '@module-federation/enhanced/runtime';
 
 import { Skeleton } from '@/components/ui/skeleton';
@@ -14,6 +16,26 @@ const instance = createInstance({
       entry: 'https://react-islands.dershani.com/mf/mf-manifest.json',
     },
   ],
+  shared: {
+    react: {
+      version: PackageJson.dependencies.react,
+      scope: 'default',
+      lib: () => React,
+      shareConfig: {
+        requiredVersion: PackageJson.dependencies.react,
+        singleton: true,
+      },
+    },
+    'react-dom': {
+      version: PackageJson.dependencies['react-dom'],
+      scope: 'default',
+      lib: () => ReactDOM,
+      shareConfig: {
+        requiredVersion: PackageJson.dependencies['react-dom'],
+        singleton: true,
+      },
+    },
+  },
 });
 
 function Loading() {
