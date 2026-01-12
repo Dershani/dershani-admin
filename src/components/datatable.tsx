@@ -134,9 +134,9 @@ export const Datatable = ({
                   {headerGroups[0].headers.map(cell => (
                     <TableCell
                       key={cell.id}
-                      className="text-nowrap border-r last:border-r-0"
+                      className="text-nowrap border-r last:border-r-0 select-none"
                     >
-                      ..
+                      {'\u00A0'}
                     </TableCell>
                   ))}
                 </TableRow>
