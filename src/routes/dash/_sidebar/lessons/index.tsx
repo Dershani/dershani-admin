@@ -1,7 +1,7 @@
 import { PageTitle } from '@/hooks/page-title';
 import { collections } from '@/integrations/collections';
 import { useLiveQuery } from '@tanstack/react-db';
-import { createFileRoute } from '@tanstack/react-router';
+import { Link, createFileRoute } from '@tanstack/react-router';
 import {
   getCoreRowModel,
   getPaginationRowModel,
@@ -10,12 +10,13 @@ import {
 } from '@tanstack/react-table';
 
 import { Datatable, TableNav } from '@/components/datatable';
+import { Button } from '@/components/ui/button';
 
 import { notFoundRedirectOptions } from '@/lib/redirect-route-options';
 
 import { columns } from './-columns';
 
-export const Route = createFileRoute('/dash/_sidebar/lessons')({
+export const Route = createFileRoute('/dash/_sidebar/lessons/')({
   ...notFoundRedirectOptions('/dash/lessons'),
   component: RouteComponent,
 });
@@ -42,6 +43,11 @@ function RouteComponent() {
   return (
     <div className="space-y-4">
       <PageTitle>Dersler</PageTitle>
+      <div className="flex justify-end">
+        <Button asChild>
+          <Link to="/dash/lessons/create">Yeni Ders</Link>
+        </Button>
+      </div>
       <Datatable isLoading={isLoading} table={table} columns={columns} />
       <TableNav table={table} />
     </div>

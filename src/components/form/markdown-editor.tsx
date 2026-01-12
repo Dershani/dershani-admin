@@ -1,8 +1,10 @@
 import MDEditor, { MDEditorProps } from '@uiw/react-md-editor';
 import katex from 'katex';
 import 'katex/dist/katex.css';
+import rehypeKatex from 'rehype-katex';
 import { getCodeString } from 'rehype-rewrite';
 import rehypeSanitize, { defaultSchema } from 'rehype-sanitize';
+import remarkMath from 'remark-math';
 
 import { getCommands, getExtraCommands } from './markdown-editor-toolbar';
 import './react-islands';
@@ -10,7 +12,7 @@ import { rehypeReactIsland } from './rehype-react-island';
 
 const schema = {
   ...defaultSchema,
-  tagNames: [...(defaultSchema.tagNames || []), 'react-island'],
+  tagNames: [...(defaultSchema.tagNames || []), 'code', 'react-island'],
   attributes: {
     ...defaultSchema.attributes,
     'react-island': ['data-name'],
@@ -46,50 +48,17 @@ export function MarkdownEditor({
       commands={getCommands()}
       extraCommands={getExtraCommands()}
       previewOptions={{
-        components: {
-          code: ({ children = [], className, ...props }) => {
-            if (
-              typeof children === 'string' &&
-              /^\$\$(.*)\$\$/.test(children)
-            ) {
-              const html = katex.renderToString(
-                children.replace(/^\$\$(.*)\$\$/, '$1'),
-                {
-                  throwOnError: false,
-                }
-              );
-              return (
-                <code
-                  dangerouslySetInnerHTML={{ __html: html }}
-                  style={{ background: 'transparent' }}
-                />
-              );
-            }
-            const code =
-              props.node && props.node.children
-                ? getCodeString(props.node.children)
-                : children;
-            if (
-              typeof code === 'string' &&
-              typeof className === 'string' &&
-              /^language-katex/.test(className.toLocaleLowerCase())
-            ) {
-              const html = katex.renderToString(code, {
-                throwOnError: false,
-              });
-              return (
-                <code
-                  style={{ fontSize: '150%' }}
-                  dangerouslySetInnerHTML={{ __html: html }}
-                />
-              );
-            }
-            return <code className={String(className)}>{children}</code>;
-          },
-        },
-        rehypePlugins: [[rehypeSanitize, schema], rehypeReactIsland],
+        components: {},
+        rehypePlugins: [
+          [rehypeSanitize, schema],
+          rehypeKatex,
+          rehypeReactIsland,
+        ],
+        remarkPlugins: [remarkMath],
         allowElement: element => {
-          return schema.tagNames.includes(element.tagName);
+          const t = schema.tagNames.includes(element.tagName);
+          if (!t) element.tagName;
+          return t;
         },
         allowedElements: schema.tagNames,
       }}

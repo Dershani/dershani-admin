@@ -15,11 +15,12 @@ import { Route as DemoFormRouteImport } from './routes/demo.form'
 import { Route as DashSidebarRouteImport } from './routes/dash/_sidebar'
 import { Route as DashSidebarTestRouteImport } from './routes/dash/_sidebar/test'
 import { Route as DashSidebarAuthRouteImport } from './routes/dash/_sidebar/auth'
-import { Route as DashSidebarLessonsRouteRouteImport } from './routes/dash/_sidebar/lessons/route'
 import { Route as DashSidebarUnitsIndexRouteImport } from './routes/dash/_sidebar/units/index'
 import { Route as DashSidebarSubjectsIndexRouteImport } from './routes/dash/_sidebar/subjects/index'
+import { Route as DashSidebarLessonsIndexRouteImport } from './routes/dash/_sidebar/lessons/index'
 import { Route as DashSidebarUnitsUnitIdRouteImport } from './routes/dash/_sidebar/units/$unitId'
 import { Route as DashSidebarSubjectsSubjectIdRouteImport } from './routes/dash/_sidebar/subjects/$subjectId'
+import { Route as DashSidebarLessonsCreateRouteImport } from './routes/dash/_sidebar/lessons/create'
 
 const DashRouteRoute = DashRouteRouteImport.update({
   id: '/dash',
@@ -50,11 +51,6 @@ const DashSidebarAuthRoute = DashSidebarAuthRouteImport.update({
   path: '/auth',
   getParentRoute: () => DashSidebarRoute,
 } as any)
-const DashSidebarLessonsRouteRoute = DashSidebarLessonsRouteRouteImport.update({
-  id: '/lessons',
-  path: '/lessons',
-  getParentRoute: () => DashSidebarRoute,
-} as any)
 const DashSidebarUnitsIndexRoute = DashSidebarUnitsIndexRouteImport.update({
   id: '/units/',
   path: '/units/',
@@ -66,6 +62,11 @@ const DashSidebarSubjectsIndexRoute =
     path: '/subjects/',
     getParentRoute: () => DashSidebarRoute,
   } as any)
+const DashSidebarLessonsIndexRoute = DashSidebarLessonsIndexRouteImport.update({
+  id: '/lessons/',
+  path: '/lessons/',
+  getParentRoute: () => DashSidebarRoute,
+} as any)
 const DashSidebarUnitsUnitIdRoute = DashSidebarUnitsUnitIdRouteImport.update({
   id: '/units/$unitId',
   path: '/units/$unitId',
@@ -77,16 +78,23 @@ const DashSidebarSubjectsSubjectIdRoute =
     path: '/subjects/$subjectId',
     getParentRoute: () => DashSidebarRoute,
   } as any)
+const DashSidebarLessonsCreateRoute =
+  DashSidebarLessonsCreateRouteImport.update({
+    id: '/lessons/create',
+    path: '/lessons/create',
+    getParentRoute: () => DashSidebarRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/dash': typeof DashSidebarRouteWithChildren
   '/demo/form': typeof DemoFormRoute
-  '/dash/lessons': typeof DashSidebarLessonsRouteRoute
   '/dash/auth': typeof DashSidebarAuthRoute
   '/dash/test': typeof DashSidebarTestRoute
+  '/dash/lessons/create': typeof DashSidebarLessonsCreateRoute
   '/dash/subjects/$subjectId': typeof DashSidebarSubjectsSubjectIdRoute
   '/dash/units/$unitId': typeof DashSidebarUnitsUnitIdRoute
+  '/dash/lessons': typeof DashSidebarLessonsIndexRoute
   '/dash/subjects': typeof DashSidebarSubjectsIndexRoute
   '/dash/units': typeof DashSidebarUnitsIndexRoute
 }
@@ -94,11 +102,12 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/dash': typeof DashSidebarRouteWithChildren
   '/demo/form': typeof DemoFormRoute
-  '/dash/lessons': typeof DashSidebarLessonsRouteRoute
   '/dash/auth': typeof DashSidebarAuthRoute
   '/dash/test': typeof DashSidebarTestRoute
+  '/dash/lessons/create': typeof DashSidebarLessonsCreateRoute
   '/dash/subjects/$subjectId': typeof DashSidebarSubjectsSubjectIdRoute
   '/dash/units/$unitId': typeof DashSidebarUnitsUnitIdRoute
+  '/dash/lessons': typeof DashSidebarLessonsIndexRoute
   '/dash/subjects': typeof DashSidebarSubjectsIndexRoute
   '/dash/units': typeof DashSidebarUnitsIndexRoute
 }
@@ -108,11 +117,12 @@ export interface FileRoutesById {
   '/dash': typeof DashRouteRouteWithChildren
   '/dash/_sidebar': typeof DashSidebarRouteWithChildren
   '/demo/form': typeof DemoFormRoute
-  '/dash/_sidebar/lessons': typeof DashSidebarLessonsRouteRoute
   '/dash/_sidebar/auth': typeof DashSidebarAuthRoute
   '/dash/_sidebar/test': typeof DashSidebarTestRoute
+  '/dash/_sidebar/lessons/create': typeof DashSidebarLessonsCreateRoute
   '/dash/_sidebar/subjects/$subjectId': typeof DashSidebarSubjectsSubjectIdRoute
   '/dash/_sidebar/units/$unitId': typeof DashSidebarUnitsUnitIdRoute
+  '/dash/_sidebar/lessons/': typeof DashSidebarLessonsIndexRoute
   '/dash/_sidebar/subjects/': typeof DashSidebarSubjectsIndexRoute
   '/dash/_sidebar/units/': typeof DashSidebarUnitsIndexRoute
 }
@@ -122,11 +132,12 @@ export interface FileRouteTypes {
     | '/'
     | '/dash'
     | '/demo/form'
-    | '/dash/lessons'
     | '/dash/auth'
     | '/dash/test'
+    | '/dash/lessons/create'
     | '/dash/subjects/$subjectId'
     | '/dash/units/$unitId'
+    | '/dash/lessons'
     | '/dash/subjects'
     | '/dash/units'
   fileRoutesByTo: FileRoutesByTo
@@ -134,11 +145,12 @@ export interface FileRouteTypes {
     | '/'
     | '/dash'
     | '/demo/form'
-    | '/dash/lessons'
     | '/dash/auth'
     | '/dash/test'
+    | '/dash/lessons/create'
     | '/dash/subjects/$subjectId'
     | '/dash/units/$unitId'
+    | '/dash/lessons'
     | '/dash/subjects'
     | '/dash/units'
   id:
@@ -147,11 +159,12 @@ export interface FileRouteTypes {
     | '/dash'
     | '/dash/_sidebar'
     | '/demo/form'
-    | '/dash/_sidebar/lessons'
     | '/dash/_sidebar/auth'
     | '/dash/_sidebar/test'
+    | '/dash/_sidebar/lessons/create'
     | '/dash/_sidebar/subjects/$subjectId'
     | '/dash/_sidebar/units/$unitId'
+    | '/dash/_sidebar/lessons/'
     | '/dash/_sidebar/subjects/'
     | '/dash/_sidebar/units/'
   fileRoutesById: FileRoutesById
@@ -206,13 +219,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DashSidebarAuthRouteImport
       parentRoute: typeof DashSidebarRoute
     }
-    '/dash/_sidebar/lessons': {
-      id: '/dash/_sidebar/lessons'
-      path: '/lessons'
-      fullPath: '/dash/lessons'
-      preLoaderRoute: typeof DashSidebarLessonsRouteRouteImport
-      parentRoute: typeof DashSidebarRoute
-    }
     '/dash/_sidebar/units/': {
       id: '/dash/_sidebar/units/'
       path: '/units'
@@ -225,6 +231,13 @@ declare module '@tanstack/react-router' {
       path: '/subjects'
       fullPath: '/dash/subjects'
       preLoaderRoute: typeof DashSidebarSubjectsIndexRouteImport
+      parentRoute: typeof DashSidebarRoute
+    }
+    '/dash/_sidebar/lessons/': {
+      id: '/dash/_sidebar/lessons/'
+      path: '/lessons'
+      fullPath: '/dash/lessons'
+      preLoaderRoute: typeof DashSidebarLessonsIndexRouteImport
       parentRoute: typeof DashSidebarRoute
     }
     '/dash/_sidebar/units/$unitId': {
@@ -241,25 +254,34 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DashSidebarSubjectsSubjectIdRouteImport
       parentRoute: typeof DashSidebarRoute
     }
+    '/dash/_sidebar/lessons/create': {
+      id: '/dash/_sidebar/lessons/create'
+      path: '/lessons/create'
+      fullPath: '/dash/lessons/create'
+      preLoaderRoute: typeof DashSidebarLessonsCreateRouteImport
+      parentRoute: typeof DashSidebarRoute
+    }
   }
 }
 
 interface DashSidebarRouteChildren {
-  DashSidebarLessonsRouteRoute: typeof DashSidebarLessonsRouteRoute
   DashSidebarAuthRoute: typeof DashSidebarAuthRoute
   DashSidebarTestRoute: typeof DashSidebarTestRoute
+  DashSidebarLessonsCreateRoute: typeof DashSidebarLessonsCreateRoute
   DashSidebarSubjectsSubjectIdRoute: typeof DashSidebarSubjectsSubjectIdRoute
   DashSidebarUnitsUnitIdRoute: typeof DashSidebarUnitsUnitIdRoute
+  DashSidebarLessonsIndexRoute: typeof DashSidebarLessonsIndexRoute
   DashSidebarSubjectsIndexRoute: typeof DashSidebarSubjectsIndexRoute
   DashSidebarUnitsIndexRoute: typeof DashSidebarUnitsIndexRoute
 }
 
 const DashSidebarRouteChildren: DashSidebarRouteChildren = {
-  DashSidebarLessonsRouteRoute: DashSidebarLessonsRouteRoute,
   DashSidebarAuthRoute: DashSidebarAuthRoute,
   DashSidebarTestRoute: DashSidebarTestRoute,
+  DashSidebarLessonsCreateRoute: DashSidebarLessonsCreateRoute,
   DashSidebarSubjectsSubjectIdRoute: DashSidebarSubjectsSubjectIdRoute,
   DashSidebarUnitsUnitIdRoute: DashSidebarUnitsUnitIdRoute,
+  DashSidebarLessonsIndexRoute: DashSidebarLessonsIndexRoute,
   DashSidebarSubjectsIndexRoute: DashSidebarSubjectsIndexRoute,
   DashSidebarUnitsIndexRoute: DashSidebarUnitsIndexRoute,
 }
