@@ -2,7 +2,7 @@ import { PageTitle } from '@/hooks/page-title';
 import { usePagination } from '@/hooks/use-pagination';
 import { collections } from '@/integrations/collections';
 import { useLiveQuery } from '@tanstack/react-db';
-import { createFileRoute } from '@tanstack/react-router';
+import { Link, createFileRoute } from '@tanstack/react-router';
 import {
   getCoreRowModel,
   getPaginationRowModel,
@@ -12,6 +12,7 @@ import {
 import { type } from 'arktype';
 
 import { Datatable, TableNav } from '@/components/datatable';
+import { Button } from '@/components/ui/button';
 
 import { notFoundRedirectOptions } from '@/lib/redirect-route-options';
 
@@ -47,6 +48,11 @@ function RouteComponent() {
   return (
     <div className="space-y-4">
       <PageTitle>Üniteler</PageTitle>
+      <div className="flex justify-end">
+        <Button asChild>
+          <Link to="/dash/units/create">Yeni Ünite</Link>
+        </Button>
+      </div>
       <Datatable isLoading={isLoading} table={table} columns={columns} />
       <TableNav table={table} />
     </div>

@@ -128,7 +128,7 @@ export function TextArea({
 export function Select({
   label,
   values,
-  placeholder,
+  placeholder = 'Seçiniz..',
 }: {
   label: string;
   values: Array<{ label: string; value: string | number }>;
