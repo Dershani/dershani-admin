@@ -4,6 +4,7 @@ import { MDEditor } from '@/components/form/tanstack-markdown-editor';
 
 import {
   FormBase,
+  SearchableSelect,
   Select,
   SubscribeButton,
   Switch,
@@ -21,6 +22,7 @@ export const { useAppForm, withForm, withFieldGroup } = createFormHook({
     TextArea,
     Switch,
     MDEditor,
+    SearchableSelect,
   },
   formComponents: {
     SubscribeButton,

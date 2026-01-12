@@ -24,7 +24,7 @@ export function MDEditor({
 
   return (
     <div className={cn('max-w-full!', parentClassName)}>
-      <Label htmlFor={field.name} className="mb-2 text-xl font-semibold">
+      <Label htmlFor={field.name} className="mb-2 font-semibold">
         {label}
       </Label>
       <Suspense fallback={<Skeleton className="h-150" />}>
